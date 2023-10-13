@@ -7,7 +7,7 @@ const amplifyconfig = ''' {
           "awsAPIPlugin": {
               "preeoh": {
                   "endpointType": "REST",                    
-                  "endpoint": "https://localhost:8080",
+                  "endpoint": "https://m920n01r47.execute-api.eu-north-1.amazonaws.com",
                   "region": "eu-north-1",
                   "authorizationType": "AMAZON_COGNITO_USER_POOLS"
               }

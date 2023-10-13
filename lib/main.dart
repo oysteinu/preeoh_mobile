@@ -35,6 +35,7 @@ class _PreeohAppState extends State<PreeohApp> {
       await Amplify.configure(amplifyconfig);
       
       var updatedJWT = await _getIdToken();
+      await onTestApi();
 
       setState(() {
         jwt = updatedJWT;
@@ -57,14 +58,12 @@ class _PreeohAppState extends State<PreeohApp> {
   Future<void> onTestApi() async {
     var token = await _getIdToken();
 
-    print(token);
-
     try {
-      /*final options = RestOptions(path: '/tasks', headers: {
-        'Authorization': token,
-      });*/
+      final restOperation = Amplify.API.get(
+        '/tasks',
+        headers: {"Authorization": token}
+      );
 
-      final restOperation = Amplify.API.get('/tasks');
       final response = await restOperation.response;
     } on ApiException catch (e) {
       print('POST call failed: $e');
