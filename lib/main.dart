@@ -52,6 +52,8 @@ class _PreeohAppState extends State<PreeohApp> {
       return "";
     }
 
+    print(userPoolTokens.idToken.raw);
+
     return userPoolTokens.idToken.raw;
   }
 
@@ -61,10 +63,12 @@ class _PreeohAppState extends State<PreeohApp> {
     try {
       final restOperation = Amplify.API.get(
         '/tasks',
-        headers: {"Authorization": token}
+        headers: {"Authorization": "Bearer $token"}
       );
 
       final response = await restOperation.response;
+
+      print(response);
     } on ApiException catch (e) {
       print('POST call failed: $e');
     }

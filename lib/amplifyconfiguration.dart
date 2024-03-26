@@ -7,7 +7,7 @@ const amplifyconfig = ''' {
           "awsAPIPlugin": {
               "preeoh": {
                   "endpointType": "REST",                    
-                  "endpoint": "https://m920n01r47.execute-api.eu-north-1.amazonaws.com",
+                  "endpoint": "https://preeoh-api-34d248de0ab6.herokuapp.com",
                   "region": "eu-north-1",
                   "authorizationType": "AMAZON_COGNITO_USER_POOLS"
               }
@@ -41,8 +41,8 @@ const amplifyconfig = ''' {
                   "OAuth": {
                       "WebDomain": "preeoh-dev.auth.eu-north-1.amazoncognito.com",
                       "AppClientId": "2ls1u20d686ams5t4qdn42ilkb",
-                      "SignInRedirectURI": "preeoh://",
-                      "SignOutRedirectURI": "preeoh://",
+                      "SignInRedirectURI": "http://localhost:51078/",
+                      "SignOutRedirectURI": "http://localhost:51078/",
                       "Scopes": [
                           "phone",
                           "email",
