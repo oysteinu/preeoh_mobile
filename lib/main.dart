@@ -1,13 +1,30 @@
+import 'dart:io';
+
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:preeoh_mobile/ui-elements.dart';
 
 import 'amplifyconfiguration.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureAmplify();
   runApp(const PreeohApp());
+}
+
+Future<void> configureAmplify() async {
+  final auth = AmplifyAuthCognito();
+
+  try {
+    await Amplify.addPlugins([auth]);
+    await Amplify.configure(amplifyconfig);
+  } on Exception catch (e) {
+    safePrint('Failed to configure Amplify: $e');
+  }
+
+  print("Amplify configured");
 }
 
 class PreeohApp extends StatefulWidget {
@@ -23,55 +40,6 @@ class _PreeohAppState extends State<PreeohApp> {
   @override
   void initState() {
     super.initState();
-    _configureAmplify();
-  }
-
-  void _configureAmplify() async {
-    final auth = AmplifyAuthCognito();
-    final api = AmplifyAPI();
-
-    try {
-      await Amplify.addPlugins([api, auth]);
-      await Amplify.configure(amplifyconfig);
-      
-      var updatedJWT = await _getIdToken();
-      await onTestApi();
-
-      setState(() {
-        jwt = updatedJWT;
-      });
-    } on Exception {}
-  }
-
-  Future<String> _getIdToken() async {
-    var creds = await Amplify.Auth.fetchAuthSession(options: const CognitoSessionOptions(getAWSCredentials: true)) as CognitoAuthSession;
-
-    var userPoolTokens = creds.userPoolTokens;
-
-    if (userPoolTokens == null) {
-      return "";
-    }
-
-    print(userPoolTokens.idToken.raw);
-
-    return userPoolTokens.idToken.raw;
-  }
-
-  Future<void> onTestApi() async {
-    var token = await _getIdToken();
-
-    try {
-      final restOperation = Amplify.API.get(
-        '/tasks',
-        headers: {"Authorization": "Bearer $token"}
-      );
-
-      final response = await restOperation.response;
-
-      print(response);
-    } on ApiException catch (e) {
-      print('POST call failed: $e');
-    }
   }
 
   @override
@@ -84,17 +52,7 @@ class _PreeohAppState extends State<PreeohApp> {
             title: const Text('Preeoh JWT'),
           ),
           body: Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
-              child: SelectionArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("$jwt"),
-                  ],
-                ),
-              ),
-          ),
+            child: taskListBuilder
         ),
     )));
   }
