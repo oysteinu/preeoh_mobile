@@ -28,8 +28,8 @@ const amplifyconfig = ''' {
                   "OAuth": {
                       "WebDomain": "preeoh-dev.auth.eu-north-1.amazoncognito.com",
                       "AppClientId": "2ls1u20d686ams5t4qdn42ilkb",
-                      "SignInRedirectURI": "http://localhost:5656/",
-                      "SignOutRedirectURI": "http://localhost:5656/",
+                      "SignInRedirectURI": "preeoh://",
+                      "SignOutRedirectURI": "preeoh://",
                       "Scopes": [
                           "phone",
                           "email",

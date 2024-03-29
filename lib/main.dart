@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:preeoh_mobile/ui-elements.dart';
 
@@ -23,8 +22,6 @@ Future<void> configureAmplify() async {
   } on Exception catch (e) {
     safePrint('Failed to configure Amplify: $e');
   }
-
-  print("Amplify configured");
 }
 
 class PreeohApp extends StatefulWidget {
@@ -45,15 +42,22 @@ class _PreeohAppState extends State<PreeohApp> {
   @override
   Widget build(BuildContext context) {
     return Authenticator(
-        child: MaterialApp(
-        builder: Authenticator.builder(),
-        home: Scaffold(
-            appBar: AppBar(
-            title: const Text('Preeoh JWT'),
-          ),
-          body: Center(
-            child: taskListBuilder
+        child: CupertinoApp(
+        theme: const CupertinoThemeData(
+          brightness: Brightness.light,
+          primaryColor: CupertinoColors.systemBlue,
         ),
-    )));
+        builder: Authenticator.builder(),
+        home: CupertinoPageScaffold(
+          navigationBar: const CupertinoNavigationBar(
+            backgroundColor: CupertinoColors.systemGrey,
+            middle: Text('Preeoh'),
+          ),
+          bottomNavigationBar: bottomNavigation,
+          child: Center(
+            child: taskListBuilder,
+        ),
+        ),
+    ));
   }
 }

@@ -23,6 +23,8 @@ Future<String> fetchIdToken() async {
 Future<List<Task>> getTasks() async {
     var token = await fetchIdToken();
 
+    print(token);
+
     final response = await http.get(
       Uri.parse('https://preeoh-api-34d248de0ab6.herokuapp.com/tasks'),
       
@@ -31,9 +33,11 @@ Future<List<Task>> getTasks() async {
       }
     );
 
-    var tasks = _parseTasks(response.body);
-
-    return tasks;
+    if (response.statusCode == 200) {
+      return _parseTasks(response.body);
+    } else {
+      return [];
+    }
   }
 
 List<Task> _parseTasks(String responseBody) {
