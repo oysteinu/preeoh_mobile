@@ -10,7 +10,11 @@
             "deviceId": "chrome",
             "request": "launch",
             "type": "dart",
-            "args": ["--web-port", "5656"],
+            "args": [
+                "--web-port",
+                "5656",
+                "--dart-define=ENV=web-local"
+            ],
         },
         {
             "name": "preeoh_mobile",

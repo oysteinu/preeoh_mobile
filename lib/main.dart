@@ -5,17 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:preeoh_mobile/data.dart';
 import 'package:preeoh_mobile/ui-elements.dart';
 import 'package:preeoh_mobile/preeohapi.dart';
+import 'dart:convert';
 
 import 'amplifyconfiguration.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await configureAmplify();
+
+  var env = const String.fromEnvironment("ENV");
+
+  await configureAmplify(env);
   runApp(const PreeohApp());
 }
 
-Future<void> configureAmplify() async {
+Future<void> configureAmplify(String env) async {
   final auth = AmplifyAuthCognito();
+
+  if (env == "web-local") {}
 
   try {
     await Amplify.addPlugins([auth]);
