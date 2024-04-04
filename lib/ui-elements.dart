@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:preeoh_mobile/preeohapi.dart';
 
-import 'data.dart';
-
 var securityBuilder = FutureBuilder<String>(
   future: fetchIdToken(),
   builder: (context, snapshot) {

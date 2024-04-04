@@ -1,10 +1,11 @@
 import 'dart:io';
 
-import 'data.dart';
 import 'dart:convert';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:http/http.dart' as http;
+
+import 'models/task.dart';
 
 Future<String> fetchIdToken() async {
   try {
